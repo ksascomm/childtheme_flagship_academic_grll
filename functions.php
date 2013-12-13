@@ -49,6 +49,12 @@ function create_the_sidebars() {
 }
 add_action('init', 'create_the_sidebars');
 
+add_action('after_setup_theme','academic_grll_theme_support', 11);
+
+function academic_grll_theme_support() {
+	remove_theme_support( 'custom-background' );
+}
+
 function remove_unused_sidebars() {
 		unregister_sidebar('page-sb');
 		unregister_sidebar('graduate-sb');
@@ -59,7 +65,6 @@ add_action( 'widgets_init', 'remove_unused_sidebars', 11 );
 
 
 function get_the_program_slug($post) {
-	wp_reset_query();
 	$post = get_queried_object_id();
 		if( is_page() && !is_page_template('template-program-frontpage.php') ) { 
         	/* Get an array of Ancestors and Parents if they exist */
@@ -74,14 +79,17 @@ function get_the_program_slug($post) {
 		}  elseif (is_page_template('template-program-frontpage.php')) {
 			$program = get_the_title($post);
 			$program = strtolower($program);
-		}elseif (is_singular() && !is_singular('people')){
+		} elseif (is_category() || is_tax()) {
+			$this_program = get_term_by('slug',get_query_var('program'), 'program');
+			$program = $this_program->slug;
+		} elseif (is_singular() && !is_singular('people')){
 			$terms = get_the_terms($post, 'program');
-			if(is_array($terms)) {
+			if(is_array($terms) || is_array($terms2)) {
 				$term_names = array();
 				foreach( $terms as $term) { 
 					$term_names[] = $term->slug;
 				 } 
-				 $program = implode('', $term_names);
+				 $program = implode(' ', $term_names);
 			} 
 			
 			else { $program = $terms->slug; }
@@ -92,7 +100,7 @@ function get_the_program_slug($post) {
 				foreach( $terms as $term) { 
 					$term_names[] = $term->slug;
 				 } 
-				 $program = implode('', $term_names);
+				 $program = implode(' ', $term_names);
 			} 
 			
 			else { $program = $terms->slug; }
@@ -117,18 +125,21 @@ function get_the_program_name($post) {
 		} elseif (is_page_template('template-program-frontpage.php')) {
 			$program = get_the_title($post);
 		
+		} elseif (is_category() || is_tax()) {
+			$this_program = get_term_by('slug',get_query_var('program'), 'program');
+			$program = $this_program->name;
 		} elseif (is_singular() && !is_singular('people')){
 			$terms = get_the_terms($post, 'program');
-			if(is_array($terms)) {
+			if(is_array($terms) || is_array($terms2)) {
 				$term_names = array();
 				foreach( $terms as $term) { 
 					$term_names[] = $term->name;
 				 } 
-				 $program = implode('', $term_names);
+				 $program = implode(' ', $term_names);
 			} 
 			
-			else { $program = $terms->name; }
-		} elseif (is_singular('people')){
+			else { $program = $terms->slug; }
+		}elseif (is_singular('people')){
 			$terms = get_the_terms($post, 'filter');
 			if(is_array($terms)) {
 				$term_names = array();
@@ -142,3 +153,81 @@ function get_the_program_name($post) {
 		} else { $program = '';}
 	return $program;
 }
+
+function add_program_columns($columns) {
+    unset($columns['author']);
+    unset($columns['comments']);
+    return array_merge($columns, 
+              array('program' => __('Program')));
+}
+add_filter('manage_post_posts_columns' , 'add_program_columns');
+
+add_action( 'manage_posts_custom_column' , 'custompost_columns', 10, 2 );
+
+function custompost_columns( $column, $post_id ) {
+    switch ( $column ) {
+	case 'program' :
+	    $terms = get_the_term_list( $post_id , 'program' , '' , ',' , '' );
+            if ( is_string( $terms ) )
+		    echo $terms;
+		else
+		    _e( 'No Program Assigned', 'your_text_domain' );
+		break;
+
+    }
+}
+
+// CREATE FILTERS WITH CUSTOM TAXONOMIES
+
+
+function post_program_add_taxonomy_filters() {
+	global $typenow;
+
+	// An array of all the taxonomyies you want to display. Use the taxonomy name or slug
+	$taxonomies = array('program');
+ 
+	// must set this to the post type you want the filter(s) displayed on
+	if ( $typenow == 'post' ) {
+ 
+		foreach ( $taxonomies as $tax_slug ) {
+			$current_tax_slug = isset( $_GET[$tax_slug] ) ? $_GET[$tax_slug] : false;
+			$tax_obj = get_taxonomy( $tax_slug );
+			$tax_name = $tax_obj->labels->name;
+			$terms = get_terms($tax_slug);
+			if ( count( $terms ) > 0) {
+				echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+				echo "<option value=''>$tax_name</option>";
+				foreach ( $terms as $term ) {
+					echo '<option value=' . $term->slug, $current_tax_slug == $term->slug ? ' selected="selected"' : '','>' . $term->name .' (' . $term->count .')</option>';
+				}
+				echo "</select>";
+			}
+		}
+	}
+}
+
+add_action( 'restrict_manage_posts', 'post_program_add_taxonomy_filters' );
+
+function delete_menu_transients()
+{
+	$terms = get_terms('program', array('hide_empty' => false));
+	$term_names = array();
+		foreach( $terms as $term) { 
+			$menu = $term->slug;
+			delete_transient('menu_' . $menu . '_query');
+		}
+}
+ 
+add_action( 'wp_update_nav_menu', 'delete_menu_transients' );
+
+function delete_news_transients()
+{
+	$terms = get_terms('program', array('hide_empty' => false));
+	$term_names = array();
+		foreach( $terms as $term) { 
+			$menu = $term->slug;
+			delete_transient('news_' . $menu . '_query');
+		}
+	delete_transient('news_mainpage_query');
+}
+	add_action('save_post','delete_news_transients');
