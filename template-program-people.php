@@ -96,7 +96,6 @@ Template Name: Program People Directory
 	<?php if ( $theme_option['flagship_sub_directory_search']  == '1' ) { ?>
 	<div class="row" id="noresults">
 		<div class="four columns centered">
-			<h3>No matching results</h3>
 		</div>
 	</div>
 	<?php } ?>

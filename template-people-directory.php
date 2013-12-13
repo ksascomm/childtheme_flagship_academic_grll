@@ -26,13 +26,12 @@ Template Name: People Directory
 
 <div class="row wrapper radius10">
 <div class="twelve columns">
-	<?php locate_template('parts-nav-breadcrumbs.php', true, false); ?>	
 	<section class="row">
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 			<h2><?php the_title();?></h2>
 		<?php endwhile; endif; ?>
 		<?php $theme_option = flagship_sub_get_global_options();
-				if ( $theme_option['flagship_sub_directory_search']  == '1' ) { locate_template('parts-directory-search.php', true); } ?>
+				if ( $theme_option['flagship_sub_directory_search']  == '1' ) { get_template_part('parts', 'directory-search'); } ?>
 	</section>
 
 
@@ -87,7 +86,6 @@ Template Name: People Directory
 	<?php if ( $theme_option['flagship_sub_directory_search']  == '1' ) { ?>
 	<div class="row" id="noresults">
 		<div class="four columns centered">
-			<h3>No matching results</h3>
 		</div>
 	</div>
 	<?php } ?>

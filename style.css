@@ -7,6 +7,19 @@ Version: 		1.0
 Template: ksas_flagship_academic
 */
 
+body {
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-color: #000;
+}
+.wrapper ul ul {
+	margin-left: 40px;
+}
+.panel li {
+	list-style: none;
+	margin-left: 10px;
+}
 .capitalize {
 	text-transform: capitalize;
 }
@@ -177,7 +190,8 @@ ul.flyout li, .nav-bar li ul li {
 
 #caption.vertical {
 	min-height: 285px;
-	position: relative;
+	padding: 0 30px;
+	margin-left: 68.2%;
 }
 
 .slide summary {
@@ -185,6 +199,11 @@ ul.flyout li, .nav-bar li ul li {
 	background: rgba(51,51,51, .7)
 }
 /*********HOMEPAGE*************/
+body.site-31 #site_title.grll h1{
+	margin: -10px 0 0 0;
+	line-height: 1em;
+	font-size: 36px;
+}
 .homepage_bg, #program-tab {
 	background: #333;
 	background: rgba(0,0,0,.9)
@@ -245,6 +264,10 @@ h5.archive {
 	font-size: 20px;
 	margin-left: 15px;
 }
+
+.textwidget {
+	margin: 0;
+}
 /*********COLORS-BG*************/
 body #sidebar_header, body #site_title, body #main_nav ul, body #logo_nav, body .widget_title, #main_nav ul li ul li:hover, #mobile-header {
 	background: #333;
@@ -274,7 +297,7 @@ body.spanish #sidebar_header, body.spanish #site_title, body.spanish #main_nav u
 	background: #333366;
 }
 /*********COLORS-FONTS*************/
-body h1, body h2, body h3, body h4, body h5, body h6, body .semibold, body table thead tr th, body table tfoot tr td, body a, body .sidebar_bg ul.nav li a, body #sidebar li a {
+body h1, body h2, body h3, body h4, body h5, body h6, body .semibold, body table thead tr th, body table tfoot tr td, body .sidebar_bg ul.nav li a, body #sidebar li a {
 	color: #333;
 }
 body.french h1, body.french h2, body.french h3, body.french h4, body.french h5, body.french h6, body.french .semibold, body.french table thead tr th, body.french table tfoot tr td, body.french a, body.french .sidebar_bg ul.nav li a, body.french #sidebar li a {
@@ -306,7 +329,7 @@ body.spanish h1, body.spanish h2, body.spanish h3, body.spanish h4, body.spanish
 	background: #000;
 }
 
-body.french #main_nav ul li:hover, body.french #main_nav li.active, body.french #main_nav li.current_page_parent, body.french #main_nav li.current_page_ancestor, body.french #main_nav ul li.current_page_item, body.french #main_nav ul li:hover ul, body.french #main_nav ul li a:hover ul, body.french #main_nav ul li.current_page_ancestor ul, body.french #main_nav ul li.current_page_item ul, body.french #main_nav ul .flyout, body.french ul.flyout li a,  {
+body.french #main_nav ul li:hover, body.french #main_nav li.active, body.french #main_nav li.current_page_parent, body.french #main_nav li.current_page_ancestor, body.french #main_nav ul li.current_page_item, body.french #main_nav ul li:hover ul, body.french #main_nav ul li a:hover ul, body.french #main_nav ul li.current_page_ancestor ul, body.french #main_nav ul li.current_page_item ul, body.french #main_nav ul .flyout, body.french ul.flyout li a  {
 	background: #224466;
 }
 
@@ -329,17 +352,27 @@ body.portuguese #main_nav ul li:hover, body.portuguese #main_nav li.active, body
 body.spanish #main_nav ul li:hover, body.spanish #main_nav li.active, body.spanish #main_nav li.current_page_parent, body.spanish #main_nav li.current_page_ancestor, body.spanish #main_nav ul li.current_page_item, body.spanish #main_nav ul li:hover ul, body.spanish #main_nav ul li a:hover ul, body.spanish #main_nav ul li.current_page_ancestor ul, body.spanish #main_nav ul li.current_page_item ul, body.spanish #main_nav ul .flyout, body.spanish ul.flyout li a {
 	background: #1a1a33;
 }
+
+/*********COLORS-SLIDER*************/
+.slide summary {
+	background: #000;
+	background: rgba(0,0,0,.8)
+;}
 /*********OVERRIDES*************/
 .sidebar_bg {
 	background: #cecece;
-background: -moz-linear-gradient(left, rgba(252,252,252,1) 0%, rgba(255,255,255,1) 61.6%, rgba(206,206,206,1) 61.7%, rgba(206,206,206,1) 100%);
-background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(252,252,252,1)), color-stop(61.6%,rgba(255,255,255,1)), color-stop(61.7%,rgba(206,206,206,1)), color-stop(100%,rgba(206,206,206,1)));
-background: -webkit-linear-gradient(left, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 61.6%,rgba(206,206,206,1) 61.7%,rgba(206,206,206,1) 100%);
-background: -o-linear-gradient(left, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 61.6%,rgba(206,206,206,1) 61.7%,rgba(206,206,206,1) 100%);
-background: -ms-linear-gradient(left, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 61.6%,rgba(206,206,206,1) 61.7%,rgba(206,206,206,1) 100%);
-background: linear-gradient(to right, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 61.6%,rgba(206,206,206,1) 61.7%,rgba(206,206,206,1) 100%);
+background: -moz-linear-gradient(left, rgba(252,252,252,1) 0%, rgba(255,255,255,1) 66.1%, rgba(206,206,206,1) 66.2%, rgba(206,206,206,1) 100%);
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(252,252,252,1)), color-stop(66.1%,rgba(255,255,255,1)), color-stop(66.2%,rgba(206,206,206,1)), color-stop(100%,rgba(206,206,206,1)));
+background: -webkit-linear-gradient(left, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 66.1%,rgba(206,206,206,1) 66.2%,rgba(206,206,206,1) 100%);
+background: -o-linear-gradient(left, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 66.1%,rgba(206,206,206,1) 66.2%,rgba(206,206,206,1) 100%);
+background: -ms-linear-gradient(left, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 66.1%,rgba(206,206,206,1) 66.2%,rgba(206,206,206,1) 100%);
+background: linear-gradient(to right, rgba(252,252,252,1) 0%,rgba(255,255,255,1) 66.1%,rgba(206,206,206,1) 66.2%,rgba(206,206,206,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2fcfcfc', endColorstr='#cecece',GradientType=1 );
 	margin-bottom: 60px;
+}
+
+.button {
+	margin-right: 7px;
 }
 
 #site_title h1 {
@@ -351,3 +384,37 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2fcfcfc', e
 .grey {color: #ccc !important;}
 
 .white {color: #FFF !important;}
+
+#main_nav ul li.current_page_item {background: none !important;}
+
+#menu-footer-links a { color: #FFF !important;}
+
+body.site-31 {
+	background-image: url('assets/images/bg_grll_main.jpg');
+}
+body.site-31.home {
+	background-image: url('assets/images/bg_grll_home.jpg');
+}
+body.site-31.french {
+	background-image: url('assets/images/bg_french.jpg');
+}
+
+body.site-31.german {
+	background-image: url('assets/images/bg_german.jpg');
+}
+
+body.site-31.hebrew {
+	background-image: url('assets/images/bg_hebrew.jpg');
+}
+
+body.site-31.italian {
+	background-image: url('assets/images/bg_italian.jpg');
+}
+
+body.site-31.portuguese {
+	background-image: url('assets/images/bg_portuguese.jpg');
+}
+
+body.site-31.spanish {
+	background-image: url('assets/images/bg_spanish.jpg');
+}
