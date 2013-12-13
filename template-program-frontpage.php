@@ -7,7 +7,6 @@ Template Name: Program Homepage
 <?php /********SET VARIABLES**************/
 	$theme_option = flagship_sub_get_global_options();
 	$program_slug = get_the_program_slug($post);
-	$program_name = get_the_program_name($post);
 /********SLIDER QUERY*************/	
 	$slider_query = new WP_Query(array(
 		'post_type' => 'slider',
@@ -15,24 +14,42 @@ Template Name: Program Homepage
 		'posts_per_page' => '1'));
 
 /********NEWS QUERY**************/
-	$news_quantity = $theme_option['flagship_sub_news_quantity'];
+	$news_quantity = $theme_option['flagship_sub_news_quantity']; $news_query_cond = $theme_option['flagship_sub_news_query_cond'];
 	if ( false === ( $news_query = get_transient( 'news_' . $program_slug . '_query' ) ) ) {
-	    // It wasn't there, so regenerate the data and save the transient
-	    $news_query = new WP_Query(array(
-	    	'post_type' => 'post',
-	    	'tax_query' => array(
-	    		'relation' => 'OR',
-	    		array(
-	    		    'taxonomy' => 'category',
-	    		    'field' => 'slug',
-	    		    'terms' => $program_slug
-	    		),
-	    		array(
-	    		    'taxonomy' => 'program',
-	    		    'field' => 'slug',
-	    		    'terms' => $program_slug,
-	    		)),
-	    	'posts_per_page' => $news_quantity)); 
+	    if ($news_query_cond === 1) {
+		    $news_query = new WP_Query(array(
+		    	'post_type' => 'post',
+		    	'tax_query' => array(
+		    		'relation' => 'AND',
+		    		array(
+		    		    'taxonomy' => 'category',
+		    		    'field' => 'slug',
+		    		    'terms' => array('books'),
+		    		    'operator' => 'NOT IN',
+		    		),
+		    		array(
+		    		    'taxonomy' => 'program',
+		    		    'field' => 'slug',
+		    		    'terms' => $program_slug,
+		    		)),
+		    	'posts_per_page' => $news_quantity)); 
+		} else {
+		    $news_query = new WP_Query(array(
+		    	'post_type' => 'post',
+		    	'tax_query' => array(
+		    		'relation' => 'OR',
+		    		array(
+		    		    'taxonomy' => 'category',
+		    		    'field' => 'slug',
+		    		    'terms' => $program_slug
+		    		),
+		    		array(
+		    		    'taxonomy' => 'program',
+		    		    'field' => 'slug',
+		    		    'terms' => $program_slug,
+		    		)),
+		    	'posts_per_page' => $news_quantity)); 
+		}    
 	    set_transient( 'news_' . $program_slug . '_query', $news_query, 2592000 );
 	} 	
 /********BEGIN SLIDER**************/
@@ -41,20 +58,14 @@ if ( $slider_query->have_posts() ) : ?>
 	<div id="slider" class="twelve columns no-gutter">
 
 	<?php while ($slider_query->have_posts()) : $slider_query->the_post(); ?>
-		<a href="<?php echo get_post_meta($post->ID, 'ecpt_urldestination', true); ?>">
 		<div class="slide row">
 		<summary class="four columns offset-by-eight vertical" id="caption">
 				<div class="middle">
 					<h3 class="white"><?php the_title(); ?></h3>
 					<h5 class="white italic"><?php echo get_the_content(); ?></h5>
-				   	<?php if ( get_post_meta($post->ID, 'ecpt_button', true) ) : ?>				
-						<h6 class="yellow">Find Out More <span class="icon-arrow-right-2"></span></h6>
-					<?php endif;?>
 				</div>
 		</summary>
-			<?php if(get_post_meta($post->ID, 'ecpt_slideimage', true)) { ?><img src="<?php echo get_post_meta($post->ID, 'ecpt_slideimage', true); ?>" class="radius-top" /><?php } ?>
 		</div>
-		</a>
 	<?php endwhile; ?>
 	</div>
 	</div>
@@ -69,7 +80,7 @@ if ( $slider_query->have_posts() ) : ?>
 		<?php endwhile; endif; ?>	
 		
 		<?php if ( $news_query->have_posts() ) : ?>
-		<h4><?php echo $program_name . ' ' . $theme_option['flagship_sub_feed_name']; ?></h4>
+		<h4 class="capitalize"><?php echo $program_slug . ' ' . $theme_option['flagship_sub_feed_name']; ?></h4>
 		<?php while ($news_query->have_posts()) : $news_query->the_post(); ?>
 		<div class="row">		
 		<section class="twelve columns">
@@ -87,7 +98,7 @@ if ( $slider_query->have_posts() ) : ?>
 		
 		<?php endwhile; ?>
 		<div class="row">
-		<a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"><h5 class="black">View <?php echo $theme_option['flagship_sub_feed_name']; ?> Archive</h5></a>
+		<a href="<?php echo site_url('/program/') . $program_slug; ?>"><h5 class="black">View <?php echo $theme_option['flagship_sub_feed_name']; ?> Archive</h5></a>
 		</div>
 		<?php endif; ?>
 		
