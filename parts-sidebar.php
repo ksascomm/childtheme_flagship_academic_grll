@@ -9,7 +9,8 @@
 		 ?>
 
 			<?php 
-			
+				$program_name = get_the_program_name($post);
+				if(empty($program_name)) {$program_name = 'Main Menu';}
 				if( is_page() ) { 
 					global $post;
 				        $ancestors = get_post_ancestors( $post->ID ); // Get the array of ancestors
@@ -23,7 +24,7 @@
 							</div>
 							<?php
 								wp_nav_menu( array( 
-									'theme_location' => 'main_nav', 
+									'menu' => $program_name, 
 									'menu_class' => 'nav', 
 									'container_class' => 'offset-gutter',
 									'submenu' => $parent_name,				
@@ -33,7 +34,7 @@
 							elseif (count($ancestors) == 1 ) {
 								$page_name = $post->post_title;
 								$test_menu = wp_nav_menu( array( 
-									'theme_location' => 'main_nav', 
+									'menu' => $program_name, 
 									'menu_class' => 'nav',
 									'fallback_cb' => 'false', 
 									'container_class' => 'offset-gutter',
@@ -67,11 +68,7 @@
 			<?php $program_slug = get_the_program_slug($post);
 			if (is_page_template('template-program-frontpage.php')) {
 				dynamic_sidebar($program_slug . '-sb');
-			} elseif ( have_posts() && get_post_meta($post->ID, 'ecpt_page_sidebar', true) ) {
-				echo get_post_meta($post->ID, 'ecpt_page_sidebar', true);
-			}	
-			?>
-	
+			} 			?>
 	
 
 		<!-- End Widget Content -->
