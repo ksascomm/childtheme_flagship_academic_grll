@@ -1,35 +1,35 @@
-<?php $program_name = get_the_program_name($post); ?>	
 <header>
+<?php
+	$home_url = site_url();
+	$program_slug = get_the_program_slug($post);
+    $programs = get_terms('program', array(
+    		'orderby'       => 'name', 
+    		'order'         => 'ASC',
+    		'hide_empty'    => false, 
+    		));
+    		
+    $count_programs =  count($programs); ?>
+
+<?php if(is_handheld()) { ?>
 		<div class="row show-for-small" id="mobile-header">
 			<div class="four columns centered">
-			<div class="mobile-logo centered"><a href="<?php echo network_site_url(); ?>">Home</a></div>
+			<div class="mobile-logo centered"><a href="http://krieger.jhu.edu">Home</a></div>
 			<h2 class="white" align="center"><?php echo get_bloginfo('title'); ?></h2>
 		<div class="row" id="site_title">
-			<?php
-				$page = get_queried_object_id();
-				$ancestors = get_post_ancestors( $page );
-				$page_object = get_post($page);
-				if (count($ancestors) == 1 ) {$url = $page_object->post_name;} else $url = '';
-				$programs = get_terms('program', array(
-						'orderby'       => 'name', 
-						'order'         => 'ASC',
-						'hide_empty'    => false, 
-						));
-						
-				$count_programs =  count($programs); ?>
 						
 			<div class="three columns program">	
-				<select onchange="window.open(this.options[this.selectedIndex].value,'_top')">
+				<select id="program_switch">
 					<option>Switch Program &#9662;</option>
-					<option value="<?php echo site_url(); ?>">Department Home</option>
+					<option value="<?php echo $home_url; ?>">Department Home</option>
 					<?php if ( $count_programs > 0 ) { foreach ( $programs as $program ) { ?>
-							<option value="<?php echo site_url() . '/' . $program->slug . '/' . $url; ?>"><?php echo $program->name; ?></option>
+							<option value="<?php echo $home_url . '/' . $program->slug . '/'; ?>"><?php echo $program->name; ?></option>
 					<?php } } ?>
 				</select>
 			</div>
 			</div>
 		</div>
 		</div>
+<?php } ?>
 		<div class="row hide-for-print">
 			<div id="search-bar" class="offset-by-seven five mobile-four columns">
 				<div class="row">
@@ -56,35 +56,27 @@
 				</div>	
 			</div>	<!-- End #search-bar	 -->
 		</div>	
-		
+<?php if(!is_handheld()) { ?>
 		<div class="row hide-for-small hide-for-print">
 			<div class="three columns hide-for-small" id="logo_nav">
-				<li class="logo"><a href="<?php echo network_home_url(); ?>" title="Krieger School of Arts & Sciences">Krieger School of Arts & Sciences</a></li>
+				<li class="logo"><a href="http://krieger.jhu.edu" title="Krieger School of Arts & Sciences">Krieger School of Arts & Sciences</a></li>
 			</div>
 		</div>
-		<div class="row hide-for-small" id="site_title">
-			<?php $program_name = get_the_program_name($post); 
-				$programs = get_terms('program', array(
-						'orderby'       => 'name', 
-						'order'         => 'ASC',
-						'hide_empty'    => false, 
-						));
-						
-				$count_programs =  count($programs); ?>
-						
+		<div class="row hide-for-small grll" id="site_title">
 			<div class="three columns program">	
-				<select onchange="window.open(this.options[this.selectedIndex].value,'_top')">
+				<select id="program_switch">
 					<option>Select Program &#9662;</option>
-					<option value="<?php echo site_url(); ?>">Department Home</option>
+					<option value="<?php echo $home_url; ?>">Department Home</option>
 					<?php if ( $count_programs > 0 ) { foreach ( $programs as $program ) { ?>
-							<option value="<?php echo site_url() . '/' . $program->slug; ?>"><?php echo $program->name; ?></option>
+							<option value="<?php echo $home_url . '/' . $program->slug; ?>"><?php echo $program->name; ?></option>
 					<?php } } ?>
 				</select>
 			</div> 
-			<div class="seven columns end">	
-				<a href="<?php echo site_url(); ?>"><h1 class="white"><span class="small"><?php echo get_bloginfo ( 'description' ); ?></span>					<?php echo get_bloginfo ( 'title' ); ?></h1></a>
+			<div class="six columns end">	
+				<a href="<?php echo $home_url; ?>"><h1 class="white"><span class="small"><?php echo get_bloginfo ( 'description' ); ?></span>					<?php echo get_bloginfo ( 'title' ); ?></h1></a>
 			</div>
 		</div>
+<?php } ?>		
 		<div class="row hide-for-print">
 			<?php wp_nav_menu( array( 
 				'theme_location' => 'main_nav', 
@@ -96,4 +88,5 @@
 				'walker' => new foundation_navigation(),
 				'depth' => 2  )); ?> 
 		</div>
-		</header>
+
+</header>
