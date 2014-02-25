@@ -23,7 +23,6 @@
 					)),			
 			'posts_per_page' => '1'));
 	/********NEWS QUERY**************/		
-		$news_quantity = $theme_option['flagship_sub_news_quantity'];
 		$news_query_cond = $theme_option['flagship_sub_news_query_cond'];
 			if ( false === ( $news_query = get_transient( 'news_mainpage_query' ) ) ) {
 				if ($news_query_cond === 1) {
@@ -37,11 +36,11 @@
 								'operator' => 'NOT IN'
 							)
 						),
-						'posts_per_page' => $news_quantity)); 
+						'posts_per_page' => 1)); 
 				} else {
 					$news_query = new WP_Query(array(
 						'post_type' => 'post',
-						'posts_per_page' => $news_quantity)); 
+						'posts_per_page' => 1)); 
 				}
 			set_transient( 'news_mainpage_query', $news_query, 2592000 );
 			} 	
@@ -107,7 +106,7 @@ if ( $slider_query->have_posts() ) : ?>
 				</article>		
 		<?php endwhile; ?>
 			<div class="row">
-				<a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"><h5 align="right" class="archive">View <?php echo $theme_option['flagship_sub_feed_name']; ?> Archive</h5></a>
+				<a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"><h5 align="right" class="archive">View More <?php echo $theme_option['flagship_sub_feed_name']; ?></h5></a>
 			</div>
 		<?php endif; ?>
 		</div>

@@ -98,7 +98,7 @@ if ( $slider_query->have_posts() ) : ?>
 		
 		<?php endwhile; ?>
 		<div class="row">
-		<a href="<?php echo site_url('/program/') . $program_slug; ?>"><h5 class="black">View <?php echo $theme_option['flagship_sub_feed_name']; ?> Archive</h5></a>
+		<a href="<?php echo site_url('/program/') . $program_slug; ?>"><h5 class="black">View More <?php echo $theme_option['flagship_sub_feed_name']; ?></h5></a>
 		</div>
 		<?php endif; ?>
 		
