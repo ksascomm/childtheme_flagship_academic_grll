@@ -258,10 +258,8 @@ h5.archive {
 	zoom: 0;
 }
 
-#program-tab h3 {
+#program-tab h4 {
 	color: #FFF;
-	text-transform: uppercase;
-	font-size: 20px;
 	margin-left: 15px;
 }
 
@@ -299,6 +297,10 @@ body.spanish #sidebar_header, body.spanish #site_title, body.spanish #main_nav u
 /*********COLORS-FONTS*************/
 body h1, body h2, body h3, body h4, body h5, body h6, body .semibold, body table thead tr th, body table tfoot tr td, body .sidebar_bg ul.nav li a, body #sidebar li a {
 	color: #333;
+}
+
+body.home h4, body.home h5, body.home h6 {
+	color: #FFF;
 }
 body.french h1, body.french h2, body.french h3, body.french h4, body.french h5, body.french h6, body.french .semibold, body.french table thead tr th, body.french table tfoot tr td, body.french a, body.french .sidebar_bg ul.nav li a, body.french #sidebar li a {
 	color: #336699;

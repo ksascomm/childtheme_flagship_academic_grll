@@ -1,3 +1,8 @@
+<?php
+/*
+Template Name: Frontpage Alt
+*/
+?>	
 <?php get_header(); ?>
 <?php
 	/********SET VARIABLES**************/
@@ -24,7 +29,6 @@
 			'posts_per_page' => '1'));
 	/********NEWS QUERY**************/		
 		$news_query_cond = $theme_option['flagship_sub_news_query_cond'];
-		$news_quantity = $theme_option['flagship_sub_news_quantity']; 
 			if ( false === ( $news_query = get_transient( 'news_mainpage_query' ) ) ) {
 				if ($news_query_cond === 1) {
 					$news_query = new WP_Query(array(
@@ -37,11 +41,11 @@
 								'operator' => 'NOT IN'
 							)
 						),
-						'posts_per_page' => $news_quantity)); 
+						'posts_per_page' => 1)); 
 				} else {
 					$news_query = new WP_Query(array(
 						'post_type' => 'post',
-						'posts_per_page' => $news_quantity)); 
+						'posts_per_page' => 1)); 
 				}
 			set_transient( 'news_mainpage_query', $news_query, 2592000 );
 			} 	
@@ -68,7 +72,7 @@ if ( $slider_query->have_posts() ) : ?>
 	<div class="twelve columns">
 		<div class="row">
 			<div class="three columns radius-top" id="program-tab">
-				<h4>Programs of Study</h4>
+				<h4>Programs</h4>
 			</div>
 		</div>
 	</div>
@@ -85,32 +89,32 @@ if ( $slider_query->have_posts() ) : ?>
 			<section>
 				<?php the_content(); ?>			
 			</section>
-		<?php endwhile; endif; ?>
-		<?php if ( $news_query->have_posts() ) : ?>
-		<h4><?php echo $theme_option['flagship_sub_feed_name']; ?></h4>
-		<?php while ($news_query->have_posts()) : $news_query->the_post(); ?>
-		<div class="row">		
-		<section class="twelve columns">
-				<a href="<?php the_permalink(); ?>">
-					<h6><?php the_date(); ?></h6>
-					<h5><?php the_title();?></h5>
-					<?php if ( has_post_thumbnail()) { ?> 
-						<?php the_post_thumbnail('thumbnail', array('class'	=> "floatleft")); ?>
-					<?php } ?>
-					<?php the_excerpt(); ?>
-				</a>
-				<hr>
-		</section>
-		</div>
-		
-		<?php endwhile; ?>
-		<div class="row">
-		<a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"><h5 class="black">View More <?php echo $theme_option['flagship_sub_feed_name']; ?></h5></a>
-		</div>
-		<?php endif; ?>
+		<?php endwhile; endif; ?>	
 	</div>	<!-- End main content (left) section -->
 	
 	<aside class="four columns hide-for-print" id="sidebar">
+		<div id="widget" class="widget news row">		
+			<div class="blue_bg widget_title"><h5 class="white"><?php echo $theme_option['flagship_sub_feed_name']; ?></h5></div>
+		<?php if ( $news_query->have_posts() ) : while ($news_query->have_posts()) : $news_query->the_post(); ?>
+				<article class="row">
+					<div class="twelve columns">				
+						<a href="<?php the_permalink(); ?>">
+							<h6><?php the_date(); ?></h6>
+							<h5 class="black"><?php the_title();?></h5>
+						<?php if ( has_post_thumbnail()) { ?> 
+							<?php the_post_thumbnail('directory', array('class'	=> "floatleft")); ?>
+						<?php } ?>
+						<?php the_excerpt(); ?>
+						</a>
+						<hr>
+					</div>
+				</article>		
+		<?php endwhile; ?>
+			<div class="row">
+				<a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"><h5 align="right" class="archive">View More <?php echo $theme_option['flagship_sub_feed_name']; ?></h5></a>
+			</div>
+		<?php endif; ?>
+		</div>
 		<?php dynamic_sidebar( 'homepage-sb' ); ?>
 	</aside>
 </div> <!-- End #landing -->
