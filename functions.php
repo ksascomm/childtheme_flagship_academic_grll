@@ -40,7 +40,7 @@ function create_the_sidebars() {
 				'description'   => 'This is the ' . $single_name . ' homepage sidebar',
 				'before_widget' => '<div id="widget" class="widget %2$s row">',
 				'after_widget'  => '</div>',
-				'before_title'  => '<div class="blue_bg widget_title"><h5 class="white">',
+				'before_title'  => '<div class="widget_title"><h5 class="white">',
 				'after_title'   => '</h5></div>' 
 				));
 		}

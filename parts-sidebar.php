@@ -19,7 +19,7 @@
 								$parent_page = get_post($post->post_parent);
 								$parent_name = $parent_page->post_title;
 							?>
-							<div class="blue_bg offset-gutter radius-topright" id="sidebar_header">
+							<div class="offset-gutter radius-topright" id="sidebar_header">
 								<h5 class="white">Navigation: <?php echo $parent_name ?></h5>
 							</div>
 							<?php
@@ -38,7 +38,7 @@
 									'menu_class' => 'nav',
 									'fallback_cb' => 'false', 
 									'container_class' => 'offset-gutter',
-									'items_wrap' =>  '<div class="blue_bg radius-topright" id="sidebar_header"><h5 class="white">Navigation: ' . $page_name . '</h5></div><ul class="%2$s">%3$s</ul>',				
+									'items_wrap' =>  '<div class="radius-topright" id="sidebar_header"><h5 class="white">Navigation: ' . $page_name . '</h5></div><ul class="%2$s">%3$s</ul>',				
 									'submenu' => $page_name,
 									'echo' => FALSE,
 								));
