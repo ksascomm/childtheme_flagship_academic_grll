@@ -51,6 +51,7 @@ Template Name: Program People Directory
 		<?php foreach($roles as $role) {
 			$role_slug = $role->slug;
 			$role_name = $role->name;
+			if ($role_slug !== 'graduate' && $role_slug !== 'job-market-candidate') {
 				$people_query = new WP_Query(array(
 						'post_type' => 'people',
 						'role' => $role_slug,
@@ -58,38 +59,12 @@ Template Name: Program People Directory
 						'meta_key' => 'ecpt_people_alpha',
 						'orderby' => 'meta_value',
 						'order' => 'ASC',
-						'posts_per_page' => '-1'));        	
-			
-			if ($people_query->have_posts()) : ?>
+						'posts_per_page' => '-1'));  
+			}      				
+				if ($people_query->have_posts()) : ?>	
 				<li class="person sub-head quicksearch-match <?php echo $filter_classes . ' ' . $role_classes; ?>"><h2 class="black capitalize"><?php echo $role_name; ?></h2></li>
-			<?php while ($people_query->have_posts()) : $people_query->the_post(); ?>
-				<li class="person <?php echo get_the_directory_filters($post);?> <?php echo get_the_roles($post); ?>">
-					<div class="row">
-						<div class="twelve columns">
-							<a href="<?php the_permalink();?>" title="<?php the_title(); ?>" class="field">
-							<?php if ( has_post_thumbnail()) : the_post_thumbnail('directory', array('class' => 'padding-five floatleft hide-for-small')); endif; ?>			    
-									<h4 class="no-margin"><?php the_title(); ?></h4></a>
-									<?php if ( get_post_meta($post->ID, 'ecpt_position', true) ) : ?><h6><?php echo get_post_meta($post->ID, 'ecpt_position', true); ?></h6><?php endif; ?>
-									<?php if ( get_post_meta($post->ID, 'ecpt_degrees', true) ) : ?><?php echo get_post_meta($post->ID, 'ecpt_degrees', true); ?><?php endif; ?>
-									<p class="contact no-margin">
-										<?php if ( get_post_meta($post->ID, 'ecpt_phone', true) ) : ?>
-											<span class="icon-mobile"><?php echo get_post_meta($post->ID, 'ecpt_phone', true); ?></span>
-										<?php endif; ?>
-										<?php if ( get_post_meta($post->ID, 'ecpt_fax', true) ) : ?>
-											<span class="icon-printer"><?php echo get_post_meta($post->ID, 'ecpt_fax', true); ?></span>
-										<?php endif; ?>
-										<?php if ( get_post_meta($post->ID, 'ecpt_email', true) ) : ?>
-											<span class="icon-mail"><a href="mailto:<?php echo get_post_meta($post->ID, 'ecpt_email', true); ?>">
-											
-											<?php echo get_post_meta($post->ID, 'ecpt_email', true); ?> </a></span>
-										<?php endif; ?>
-										<?php if ( get_post_meta($post->ID, 'ecpt_office', true) ) : ?>
-											<span class="icon-location"><?php echo get_post_meta($post->ID, 'ecpt_office', true); ?></span>
-										<?php endif; ?>
-									</p>
-						<?php if ( get_post_meta($post->ID, 'ecpt_expertise', true) ) : ?><p><b>Research Interests:&nbsp;</b><?php echo get_post_meta($post->ID, 'ecpt_expertise', true); ?></p><?php endif; ?>
-					</div>
-				</li>		
+				<?php while ($people_query->have_posts()) : $people_query->the_post(); ?>
+					<?php if ( get_post_meta($post->ID, 'ecpt_bio', true) ) { get_template_part('parts','hasbio-loop'); } else { get_template_part('parts', 'nobio-loop'); } ?>
 		<?php endwhile; endif; } wp_reset_postdata(); ?>
 		<!-- Page Content -->
 		
