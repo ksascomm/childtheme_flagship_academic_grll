@@ -7,7 +7,11 @@ Template Name: Program People Directory
 <?php get_header(); 
 	$theme_option = flagship_sub_get_global_options();
 	$program_slug = get_the_program_slug($post);
-	$roles = get_terms('role'); 
+	$roles = get_terms('role', array(
+						'orderby' 		=> 'id',
+						'order'			=> 'ASC',
+						'hide_empty'    => true,
+						)); 
 	$filters = get_terms('filter', array(
 						'orderby'       => 'name', 
 						'order'         => 'ASC',
