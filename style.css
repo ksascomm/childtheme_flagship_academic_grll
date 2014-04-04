@@ -406,7 +406,8 @@ body.site-31.german {
 }
 
 body.site-31.hebrew {
-	background-image: url('assets/images/bg_hebrew.jpg');
+	background-repeat: repeat;
+	background-image: url('assets/images/bg-grey-tile.jpeg');
 }
 
 body.site-31.italian {
